@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.controller;
+package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import vn.hoidanit.laptopshop.service.UserService;
 import vn.hoidanit.laptopshop.domain.User;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -35,14 +34,14 @@ public class UserController {
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
         model.addAttribute("users", this.userService.getAllUsers());
-        return "admin/user/table-user";
+        return "admin/user/show";
     }
 
     @RequestMapping("/admin/user/{id}")
     public String getUserDetailPage(Model model, @PathVariable long id) {
         System.out.println("check path id = " + id);
         model.addAttribute("user", this.userService.getUserById(id));
-        return "admin/user/show";
+        return "admin/user/detail";
     }
 
     @RequestMapping("/admin/user/create") // GET
