@@ -65,11 +65,14 @@ public class UserController {
     public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User hoidanit,
             BindingResult newUserBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
         // BindingResult phải đứng ngay sau @valid
+
+        // List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        // for (FieldError error : errors) {
+        // System.out.println(">>>>" + error.getField() + " - " +
+        // error.getDefaultMessage());
+        // }
+
         // validate
-        List<FieldError> errors = newUserBindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            System.out.println(">>>>" + error.getField() + " - " + error.getDefaultMessage());
-        }
         if (newUserBindingResult.hasErrors()) {
             return "/admin/user/create";
         }
@@ -79,7 +82,6 @@ public class UserController {
         hoidanit.setAvatar(avatar);
         hoidanit.setPassword(hashPassword);
         hoidanit.setRole(this.userService.getRoleByName(hoidanit.getRole().getName()));
-
         // save
         this.userService.handleSaveUser(hoidanit);
         return "redirect:/admin/user";

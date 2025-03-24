@@ -12,11 +12,18 @@
                 <meta name="author" content="Hỏi Dân IT" />
                 <title>Update Product - Hỏi Dân IT</title>
                 <link href="/css/styles.css" rel="stylesheet" />
+
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                 <script>
                     $(document).ready(() => {
                         const avatarFile = $("#avatarFile");
+                        const orgImage = "${newProduct.image}";
+                        if (orgImage) {
+                            const urlImage = "/images/product/" + orgImage;
+                            $("#avatarPreview").attr("src", urlImage);
+                            $("#avatarPreview").css({ "display": "block" });
+                        }
                         avatarFile.change(function (e) {
                             const imgURL = URL.createObjectURL(e.target.files[0]);
                             $("#avatarPreview").attr("src", imgURL);
@@ -47,8 +54,7 @@
                                             <h3>Update a product</h3>
                                             <hr />
                                             <form:form action="/admin/product/update" method="post"
-                                                modelAttribute="updateProduct" class="row"
-                                                enctype="multipart/form-data">
+                                                modelAttribute="newProduct" class="row" enctype="multipart/form-data">
                                                 <div class="mb-3 col-12 col-md-6">
                                                     <c:set var="emptyName">
                                                         <form:errors path="name" cssClass="invalid-feedback" />
@@ -133,17 +139,8 @@
                                                 </div>
 
                                                 <div class="mb-3 col-12">
-                                                    <c:choose>
-                                                        <c:when test="${not empty product.image}">
-                                                            <img style="max-height: 250px;" alt="avatar preview"
-                                                                src="/images/product/${updateProduct.image}"
-                                                                id="avatarPreview">
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <img style="max-height: 250px; display: none;"
-                                                                alt="avatar preview" id="avatarPreview">
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                                        id="avatarPreview">
                                                 </div>
 
                                                 <div class="col-12 mb-5">
