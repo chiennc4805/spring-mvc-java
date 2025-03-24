@@ -50,7 +50,7 @@ public class ProductController {
         // error.getDefaultMessage());
         // }
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/create";
+            return "admin/product/create";
         }
         // upload img
         String img = this.uploadService.handleSaveUploadFile(file, "product");
@@ -63,7 +63,7 @@ public class ProductController {
     public String getUpdateProduct(@PathVariable long id, Model model) {
         Optional<Product> updateProduct = this.productService.fetchProductById(id);
         model.addAttribute("newProduct", updateProduct.get());
-        return "/admin/product/update";
+        return "admin/product/update";
     }
 
     @PostMapping("/admin/product/update")
@@ -71,7 +71,7 @@ public class ProductController {
             BindingResult newProductBindingResult, @RequestParam("hoidanitFile") MultipartFile file) {
         // valide
         if (newProductBindingResult.hasErrors()) {
-            return "/admin/product/update";
+            return "admin/product/update";
         }
         Product currentProduct = this.productService.fetchProductById(pr.getId()).get();
         if (currentProduct != null) {
@@ -90,14 +90,14 @@ public class ProductController {
 
             this.productService.createProduct(currentProduct);
         }
-        return "/admin/product/show";
+        return "admin/product/show";
     }
 
     @GetMapping("/admin/product/delete/{id}")
     public String getDeleteProductPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
         model.addAttribute("product", new Product());
-        return "/admin/product/delete";
+        return "admin/product/delete";
     }
 
     @PostMapping("/admin/product/delete")

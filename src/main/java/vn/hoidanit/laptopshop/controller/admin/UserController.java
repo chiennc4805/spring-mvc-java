@@ -33,14 +33,14 @@ public class UserController {
     }
 
     // Trả về String là trả về tên file
-    @RequestMapping("/")
-    public String getHomePage(Model model) {
-        List<User> users = this.userService.getAllUsersByEmail("1@gmail.com");
-        System.out.println(users);
-        model.addAttribute("eric", "test");
-        model.addAttribute("hoidanit", "from controller with model");
-        return "hello";
-    }
+    // @RequestMapping("/")
+    // public String getHomePage(Model model) {
+    // List<User> users = this.userService.getAllUsersByEmail("1@gmail.com");
+    // System.out.println(users);
+    // model.addAttribute("eric", "test");
+    // model.addAttribute("hoidanit", "from controller with model");
+    // return "hello";
+    // }
 
     @RequestMapping("/admin/user")
     public String getUserPage(Model model) {
@@ -74,7 +74,7 @@ public class UserController {
 
         // validate
         if (newUserBindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         }
         //
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
@@ -110,7 +110,7 @@ public class UserController {
     public String getDeleteUserPage(Model model, @PathVariable long id) {
         model.addAttribute("id", id);
         model.addAttribute("newUser", new User());
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @PostMapping("/admin/user/delete")
